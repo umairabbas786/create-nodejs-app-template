@@ -6,8 +6,17 @@ const sendWelcomeEmail = async (userEmail, userName) => {
   const data = { name: userName };
 
   try {
-    await sendTemplatedEmail(userEmail, subject, templateName, data);
-    console.log(`Welcome email sent to ${userEmail}`);
+    const emailData = await sendTemplatedEmail(
+      userEmail,
+      subject,
+      templateName,
+      data
+    );
+    if (!emailData) {
+      console.log("Failed to send email");
+    } else {
+      console.log("Email sent successfully:", emailData);
+    }
   } catch (error) {
     console.error("Failed to send welcome email:", error);
   }

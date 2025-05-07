@@ -8,7 +8,10 @@ const sendWelcomeEmailController = async (req, res) => {
   }
 
   try {
-    await sendWelcomeEmail(email, name);
+    const emailData = await sendWelcomeEmail(email, name);
+    if (!emailData) {
+      return res.status(500).json({ message: "Failed to send email" });
+    }
     res.status(200).json({ message: "Welcome email sent successfully" });
   } catch (error) {
     res.status(500).json({ message: "Failed to send email" });
